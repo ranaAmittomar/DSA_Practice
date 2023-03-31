@@ -7,6 +7,9 @@ using namespace std;
 
 //Clone a LL having random pointers.(Means->Same LL but with Different Addresses in memory than the original LL)
 
+
+/*
+
 class Node {
 
     int data;
@@ -127,11 +130,105 @@ LinkedList* createClone(Node* head1)
     return &ll2;
 }
 
+*/
+
+//ADD  1 to the linked List and create the linked list after the addition using RECURSION...
+
+struct Node //Creating Node using Struct 
+{
+    int data;
+    Node* next;
+    Node(int d)
+    {
+        data = d;
+        next = NULL;
+    }
+};
+
+
+class LinkedList 
+{
+    Node* head, * tail;
+
+public:
+    LinkedList()
+    {
+        head = NULL;
+        tail = NULL;
+    }
+
+    void setHead(Node* newHead)
+    {
+        head = newHead;
+    }
+
+    Node* getHead()
+    {
+        return head;
+    }
+    Node* getTail()
+    {
+        return tail;
+    }
+
+    void insertAtBeginning(int data)
+    {
+        Node* newNode = new Node(data);
+        if (head == NULL)
+        {
+            head = newNode;
+            tail = newNode;
+        }
+        else
+        {
+            newNode->next = head;
+            head = newNode;
+        }
+    }
+
+    void print()
+    {
+        if (empty())
+        {
+            cout << "List is empty" << endl;
+            return;
+        }
+        else
+        {
+            Node* current = head;
+            while (current != NULL)
+            {
+                cout << current->data << "->";
+                current = current->next;
+            }
+            cout << "NULL";
+        }
+    }
+
+    bool empty()
+    {
+        return head == NULL;
+    }
+};
 
 int main()
 {
-    LinkedList ll1= LinkedList();
-    ll1.insertAtTheEnd(10);
+    LinkedList ll= LinkedList();
+
+    ll.print();
+
+    ll.insertAtBeginning(11);
+    ll.insertAtBeginning(15);
+    ll.insertAtBeginning(18);
+    ll.insertAtBeginning(26);
+    ll.insertAtBeginning(23);
+    ll.insertAtBeginning(29);
+
+    ll.print();
+
+
+    /*
+     ll1.insertAtTheEnd(10);
     ll1.insertAtTheEnd(11);
     ll1.insertAtTheEnd(12);
     ll1.insertAtTheEnd(13);
@@ -150,6 +247,9 @@ int main()
 
     LinkedList* ll2 = createClone(head1);
     ll2->print();
+    
+    */
+   
 
     return 0;
 }
