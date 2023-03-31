@@ -209,7 +209,33 @@ public:
     {
         return head == NULL;
     }
+
 };
+
+
+int add1ToNumberUtil(Node* curr)
+{
+    if (curr == NULL)
+    {
+        return 1;
+    }
+    int toAdd = add1ToNumberUtil(curr->next);
+    int carry = (curr->data + toAdd) / 10;
+    curr->data = (curr->data + toAdd) % 10;
+    return carry;
+}
+
+Node* add1ToNumber(Node *head)
+{
+    int carry = add1ToNumberUtil(head);
+    if (carry == 1)
+    {
+        Node* newNode = new Node(carry);
+        newNode->next = head;
+        head = newNode;
+    }
+    return head;
+}
 
 int main()
 {
@@ -217,15 +243,15 @@ int main()
 
     ll.print();
 
-    ll.insertAtBeginning(11);
-    ll.insertAtBeginning(15);
-    ll.insertAtBeginning(18);
-    ll.insertAtBeginning(26);
-    ll.insertAtBeginning(23);
-    ll.insertAtBeginning(29);
+    ll.insertAtBeginning(9);
+    ll.insertAtBeginning(9);
+    ll.insertAtBeginning(9);
+    ll.insertAtBeginning(8);
 
     ll.print();
-
+    ll.setHead(add1ToNumber(ll.getHead()));
+    cout << endl;
+    ll.print();
 
     /*
      ll1.insertAtTheEnd(10);
