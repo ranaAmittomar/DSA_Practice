@@ -242,7 +242,7 @@ int main()
     LinkedList ll= LinkedList();
 
     ll.print();
-
+    //Keep in mind that We must take only single digit for every node(because that's our problem)
     ll.insertAtBeginning(9);
     ll.insertAtBeginning(9);
     ll.insertAtBeginning(9);
