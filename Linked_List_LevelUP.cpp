@@ -145,8 +145,7 @@ struct Node //Creating Node using Struct
     }
 };
 
-
-class LinkedList 
+class LinkedList //These are basically The STRUCTURE OF THE LINKED LIST ,LIKE ADDING,DELETION,and we can use these function we created in class for other functions outside the class.
 {
     Node* head, * tail;
 
@@ -186,6 +185,22 @@ public:
         }
     }
 
+    void insertAtEnd(int data)
+    {
+        Node* newNode = new Node(data);
+        if (head == NULL)
+        {
+            head = newNode;
+            tail = newNode;
+        }
+        else
+        {
+            tail->next = newNode;
+            tail = newNode;
+        }
+    }
+
+
     void print()
     {
         if (empty())
@@ -216,13 +231,13 @@ public:
 int add1ToNumberUtil(Node* curr)
 {
     if (curr == NULL)
-    {
         return 1;
-    }
+
     int toAdd = add1ToNumberUtil(curr->next);
     int carry = (curr->data + toAdd) / 10;
     curr->data = (curr->data + toAdd) % 10;
     return carry;
+
 }
 
 Node* add1ToNumber(Node *head)
@@ -237,21 +252,121 @@ Node* add1ToNumber(Node *head)
     return head;
 }
 
+
+//Segragate the Linked List In Even and Odd Linked List(Basically create two new Linked List having the Even and Odd Numbers in lIst Separately)
+void separateEvenAndOdd(LinkedList* ll)
+{
+    ll->print();
+    cout << endl;
+    Node* evenHead=NULL, * evenTail=NULL, * oddHead=NULL, * oddTail=NULL;
+    Node* head = ll->getHead();
+
+    while (head != NULL)
+    {
+        if (head->data & 1) // the AND OPERATION(BIT MANIPULATION) to check for even or odd! The Bit Manipulation does Faster Calculations.
+        {
+            //Odd Node Case
+            if (oddHead == NULL)
+            {
+                oddHead = head;
+                oddTail = oddHead;
+            }
+            else {
+                oddTail->next = head;
+                oddTail = oddTail->next;
+            }
+        }
+        else
+        {
+            //Even Node Case
+            if (evenHead == NULL)
+            {
+                evenHead = head;
+                evenTail = evenHead;
+            }
+            else {
+                evenTail->next = head;
+                evenTail = evenTail->next;
+            }
+        }
+        head = head->next;
+    }
+
+    if (evenTail)
+        evenTail->next = NULL;
+    if (oddTail)
+        oddTail->next = NULL;
+
+    LinkedList oll = LinkedList();
+    oll.setHead(head);
+    LinkedList ell = LinkedList();
+    ell.setHead(head);
+    ell.print();
+    oll.print();
+}
+
+Node* mergeTwoSortedList(Node* ll1, Node* ll2)
+{
+    if (ll1 == NULL)
+        return ll2;
+
+    else if (ll2 == NULL)
+        return ll1;
+    else
+    {
+        Node* newHead;
+        if (ll1->data < ll2->data)
+        {
+            newHead = ll1;
+            newHead->next = mergeTwoSortedList(ll1->next, ll2);
+        }
+        else
+        {
+            newHead = ll2;
+            newHead->next = mergeTwoSortedList(ll1, ll2->next);
+        }
+        return newHead;
+    }
+}
+
 int main()
 {
-    LinkedList ll= LinkedList();
+    LinkedList ll1= LinkedList();
+    LinkedList ll2 = LinkedList();
 
-    ll.print();
+    /*
+    * ll.print();
     //Keep in mind that We must take only single digit for every node(because that's our problem)
-    ll.insertAtBeginning(9);
+    ll.insertAtBeginning(1);
     ll.insertAtBeginning(9);
     ll.insertAtBeginning(9);
     ll.insertAtBeginning(8);
+    */
 
-    ll.print();
+    ll1.insertAtEnd(1);
+    ll1.insertAtEnd(3);
+    ll1.insertAtEnd(4);
+    ll1.insertAtEnd(5);
+    ll1.insertAtEnd(7);
+    ll1.insertAtEnd(11);
+    ll2.insertAtEnd(2);
+    ll2.insertAtEnd(8);
+    ll2.insertAtEnd(15);
+    ll2.insertAtEnd(17);
+    ll2.insertAtEnd(19);
+
+//    separateEvenAndOdd(&ll); //We Pass Reference ,so That ,the things we're passing doesn't create it's own entity in the system.
+    Node* newHead = mergeTwoSortedList(ll1.getHead(), ll2.getHead());
+    LinkedList ll3 = LinkedList();
+    ll3.setHead(newHead);
+    cout << "The Merged Sorted List :  ";
+    ll3.print(); 
+    /*
+    
     ll.setHead(add1ToNumber(ll.getHead()));
     cout << endl;
     ll.print();
+    */
 
     /*
      ll1.insertAtTheEnd(10);
